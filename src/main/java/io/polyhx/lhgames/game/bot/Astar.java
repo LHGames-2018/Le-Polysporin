@@ -7,30 +7,25 @@ package io.polyhx.lhgames.game.bot;
 
 import io.polyhx.lhgames.game.Map;
 import io.polyhx.lhgames.game.Player;
-import io.polyhx.lhgames.game.point.Point;
 import io.polyhx.lhgames.game.tile.Tile;
 import io.polyhx.lhgames.game.tile.TileContent;
 import java.util.ArrayList;
 import java.util.Stack;
 
 /**
- *
+ * 
  * @author Batikan
  */
 public class Astar {
 
     private Map map;
-    private Stack<Tile> openList;
-    private Stack<Tile> closedList;
+    private Stack<Tile> openList = new Stack<>();
+    private Stack<Tile> closedList = new Stack<>();
     
     public Astar(Player player) {
-        cheminPlusCout(new Tile(player.getPosition(), TileContent.PLAYER), new Tile(new Point(10, 10), TileContent.EMPTY));
     }
 
     private void cheminPlusCout(Tile depart, Tile destination) {
-        openList = new Stack<>();
-        closedList = new Stack<>();
-        
         ArrayList<Tile> listeVoisins = new ArrayList<>();
         
         openList.add(depart);
