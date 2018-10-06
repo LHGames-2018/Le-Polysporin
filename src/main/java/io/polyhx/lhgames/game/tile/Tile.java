@@ -11,7 +11,29 @@ public class Tile implements IPoint {
      * This global position of the tile.
      */
     private final Point fPosition;
+    private int cout;
+    private double heuristique;
 
+    public double getHeuristique() {
+        return heuristique;
+    }
+
+    public int getCout() {
+        return cout;
+    }
+
+    public void setCout(int cout) {
+        this.cout = cout;
+    }
+
+    public void setHeuristique(double heuristique) {
+        this.heuristique = heuristique;
+    }
+    
+    public double getDistance(Tile tile1){
+        return Math.sqrt(Math.pow(tile1.getY() - this.getY(), 2) + Math.pow(tile1.getX() - this.getX(), 2));
+    }
+    
     /**
      * The type of this tile.
      */
