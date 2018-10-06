@@ -17,17 +17,14 @@ public class Bot extends BaseBot {
         map.print();
         IAction aReturn = null;
         System.out.println(player.getCarriedResource() + " " + player.getCapacityLevel());
-        if (player.getCarriedResource() == player.getResourceCapacity()) {
-            aReturn = bouger(map, player, map.getTile(player.getHousePosition().getX(), player.getHousePosition().getY()));
-        } else {
-            ResourceTile resource = map.getResources().get(0);
-            for (int i = 1; i < map.getResources().size(); i++) {
-                if ((map.getResources().get(i).getX() + map.getResources().get(i).getY()) < (resource.getX() + resource.getY())) {
-                    resource = map.getResources().get(i);
-                }
+
+        ResourceTile resource = map.getResources().get(0);
+        for (int i = 1; i < map.getResources().size(); i++) {
+            if ((map.getResources().get(i).getX() + map.getResources().get(i).getY()) < (resource.getX() + resource.getY())) {
+                resource = map.getResources().get(i);
             }
-            aReturn = bouger(map, player, map.getTile(resource.getX(), resource.getY()));
         }
+        aReturn = bouger(map, player, map.getTile(resource.getX(), resource.getY()));
 
         return aReturn;
 
@@ -35,7 +32,6 @@ public class Bot extends BaseBot {
 
     private IAction bouger(Map map, Player player, Tile destination) {
         IAction aReturn = null;
-        System.out.println("yeet");
         if (player.getX() > destination.getX()) {
             if (map.getTile(player.getX() - 1, player.getY()).isEmpty()) {
                 aReturn = createMoveAction(Point.LEFT);
