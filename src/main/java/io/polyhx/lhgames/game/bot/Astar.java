@@ -7,10 +7,10 @@ package io.polyhx.lhgames.game.bot;
 
 import io.polyhx.lhgames.game.Map;
 import io.polyhx.lhgames.game.Player;
-import io.polyhx.lhgames.game.point.IPoint;
 import io.polyhx.lhgames.game.point.Point;
 import io.polyhx.lhgames.game.tile.Tile;
 import io.polyhx.lhgames.game.tile.TileContent;
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -20,49 +20,62 @@ import java.util.Stack;
 public class Astar {
 
     private Map map;
-    private Stack openList = new Stack();
-    private Stack closedList = new Stack();
-    
+    private Stack<Tile> openList;
+    private Stack<Tile> closedList;
     
     public Astar(Player player) {
         cheminPlusCout(new Tile(player.getPosition(), TileContent.PLAYER), new Tile(new Point(10, 10), TileContent.EMPTY));
     }
-    
-    private int comparer2noeuds(Tile noeud1, Tile noeud2){
-        if (noeud1.getHeuristique() < noeud2.getHeuristique()){
-            return 1;
-        } else if (noeud1.getHeuristique() == noeud2.getHeuristique()){
-            return 0;    
-        } else {
-            return -1;
-        }
-    }
-    
-    private void cheminPlusCout(IPoint depart, Tile destination){
+
+    private void cheminPlusCout(Tile depart, Tile destination) {
+        openList = new Stack<>();
+        closedList = new Stack<>();
+        
+        ArrayList<Tile> listeVoisins = new ArrayList<>();
+        
         openList.add(depart);
-        while(!openList.empty()){
-            Tile u = (Tile)openList.peek();
-            if ((u.getX() == destination.getX()) && (u.getY() == destination.getY())){
-                //reconstruction
-                //on decriss de la boucle
-            } else {
-                for (int x = 0; x < map.getTiles().size(); x++){
-                    for (int y = 0; y < map.getTiles().size(); y++){
-                        Tile v = new Tile(new Point(x, y), TileContent.EMPTY);
-                        if (!(openList.contains(v) || closedList.contains(v))){
-                           v.setCout(u.getCout() + 1);
-                           v.setHeuristique(v.getCout() + v.getDistance(destination));
-                           openList.add(v);
+        
+        while (!(openList.empty())){
+            Tile q = openList.get(0);
+            
+            for (Tile tile: openList){
+                if ((tile.getCout() + tile.getHeuristique()) < (q.getCout() + q.getHeuristique())){
+                    q = tile;
+                }
+            }
+            openList.remove(q);
+            
+            Tile gauche = map.getTile(q.getX() - 1, q.getY());
+            Tile droite = map.getTile(q.getX() + 1, q.getY());
+            Tile bas = map.getTile(q.getX(), q.getY() + 1);
+            Tile haut = map.getTile(q.getX(), q.getY() - 1);
+            
+            gauche.setParent(q);
+            droite.setParent(q);
+            bas.setParent(q);
+            haut.setParent(q);
+            
+            listeVoisins.add(gauche);
+            listeVoisins.add(droite);
+            listeVoisins.add(bas);
+            listeVoisins.add(haut);
+            
+            for (Tile voisin: listeVoisins){
+                if (voisin.getX() == destination.getX() && voisin.getY() == destination.getY()){
+                    voisin.setCout(q.getCout() + voisin.getDistance(q));
+                    voisin.setHeuristique((Math.abs(voisin.getX() - destination.getX())) + (Math.abs(voisin.getY() - destination.getY())));
+                    break;
+                } else if (openList.contains(voisin)){
+                    
+                } else if (closedList.contains(voisin)){
+                    for (Tile closedListTile: closedList){
+                        if ((closedListTile.getCout() + closedListTile.getHeuristique()) > (voisin.getCout() + voisin.getHeuristique())){
+                            openList.add(closedListTile);
                         }
-                        closedList.add(u);
                     }
                 }
             }
+            closedList.push(q);
         }
     }
-    
-    private void refresh(){
-        
-    }
-    
 }

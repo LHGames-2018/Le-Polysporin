@@ -23,6 +23,11 @@ public class Tile implements IPoint {
      * @param position The global position of the tile.
      * @param content  The type of the tile.
      */
+    
+    private double cout;
+    private double heuristique;
+    private Tile parent = null;
+    
     public Tile(Point position, TileContent content) {
         fPosition = position;
         fContent = content;
@@ -44,6 +49,26 @@ public class Tile implements IPoint {
      */
     public TileContent getContent() {
         return fContent;
+    }
+
+    public double getCout() {
+        return cout;
+    }
+    
+    public void setCout(double cout){
+        this.cout = cout;
+    }
+
+    public double getHeuristique() {
+        return heuristique;
+    }
+
+    public void setHeuristique(double heuristique) {
+        this.heuristique = heuristique;
+    }
+    
+    public void setParent(Tile parent){
+        this.parent = parent;
     }
 
     /**
@@ -107,6 +132,10 @@ public class Tile implements IPoint {
      */
     public boolean isPlayer() {
         return (fContent == TileContent.PLAYER);
+    }
+    
+    public double getDistance(Tile destination){
+        return Math.sqrt((Math.pow((destination.getY() - this.getY()), 2)) + (Math.pow((destination.getX() - this.getX()), 2)));
     }
 
     @Override
