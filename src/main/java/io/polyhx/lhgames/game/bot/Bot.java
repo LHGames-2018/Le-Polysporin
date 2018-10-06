@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Bot extends BaseBot {
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
-        
-        return createMoveAction(Point.UP);
+        map.print();
+        return createMoveAction(Point.LEFT);
         
     }
 }
