@@ -29,7 +29,8 @@ public class Bot extends BaseBot {
         
         
         
-        return createMoveAction(Point.UP);
+        return createCollectAction(Point.UP);
+        
         
     }
 }
