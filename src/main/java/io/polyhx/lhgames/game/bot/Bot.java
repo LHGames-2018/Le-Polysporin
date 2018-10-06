@@ -6,10 +6,14 @@ import io.polyhx.lhgames.game.Player;
 import io.polyhx.lhgames.game.action.IAction;
 import io.polyhx.lhgames.game.point.Point;
 import io.polyhx.lhgames.game.tile.ResourceTile;
+import io.polyhx.lhgames.game.tile.TileContent;
 
 import java.util.List;
 
 public class Bot extends BaseBot {
+    
+    boolean compteur=true;
+    boolean maisonAVoler=false;
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
         map.print();
         
@@ -27,10 +31,32 @@ public class Bot extends BaseBot {
                 return createMeleeAttackAction(coor);
         }
         
-        
-        
-        return createCollectAction(Point.UP);
-        
+//        int x = player.getPosition().getX()-1;
+//        int y = player.getPosition().getY();
+//        System.out.println(x+" "+y);
+//        System.out.println(map.getTiles().get(x).get(y).getContent());
+//        if(TileContent.WALL==(map.getTiles().get(x).get(y).getContent()))
+//            
+//            
+//           return createMeleeAttackAction(Point.UP);
+//        }
+//         
+         for (Player other : others) {
+            if(map.getTileLeftOf(player.getPosition())==map.getTile(other.getHousePosition()))
+                maisonAVoler=true;
+            else
+                maisonAVoler=false;
+        }
+        if (compteur){
+            compteur=false;
+            return createMeleeAttackAction(Point.UP);
+        }
+       if(maisonAVoler)
+           return createStealAction(Point.UP);
+        else{
+            compteur=true;
+        return createMoveAction(Point.UP);
+        }
         
     }
 }
