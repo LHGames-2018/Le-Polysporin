@@ -41,15 +41,17 @@ public class Bot extends BaseBot {
 //           return createMeleeAttackAction(Point.UP);
 //        }
 //         
-         for (Player other : others) {
-            if(map.getTileLeftOf(player.getPosition())==map.getTile(other.getHousePosition()))
-                maisonAVoler=true;
-            else
-                maisonAVoler=false;
-        }
+//         for (Player other : others) {
+//            if(map.getTileLeftOf(player.getPosition())==map.getTile(other.getHousePosition())){
+//                 System.out.println("VERY NICE");
+//                maisonAVoler=true;
+//            }
+//            else
+//                maisonAVoler=false;
+//        }
         if (compteur){
             compteur=false;
-            return createMeleeAttackAction(Point.UP);
+            return createCollectAction(Point.UP);
         }
        if(maisonAVoler)
            return createStealAction(Point.UP);
