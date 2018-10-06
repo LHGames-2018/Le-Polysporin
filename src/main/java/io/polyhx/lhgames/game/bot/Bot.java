@@ -35,6 +35,7 @@ public class Bot extends BaseBot {
 
     private IAction bouger(Map map, Player player, Tile destination) {
         IAction aReturn = null;
+        System.out.println("yeet");
         if (player.getX() > destination.getX()) {
             if (map.getTile(player.getX() - 1, player.getY()).isEmpty()) {
                 aReturn = createMoveAction(Point.LEFT);
