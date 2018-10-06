@@ -8,13 +8,32 @@ import io.polyhx.lhgames.game.point.Point;
  */
 public class Tile implements IPoint {
     /**
-     * This global position of the tile.
-     */
-    private final Point fPosition;
+     * This global position of t*/
 
+    public double getHeuristique() {
+        return heuristique;
+    }
+
+    public double getCout() {
+        return cout;
+    }
+
+    public void setCout(int cout) {
+        this.cout = cout;
+    }
+
+    public void setHeuristique(double heuristique) {
+        this.heuristique = heuristique;
+    }
+    
+    public double getDistance(Tile tile1){
+        return Math.sqrt(Math.pow(tile1.getY() - this.getY(), 2) + Math.pow(tile1.getX() - this.getX(), 2));
+    }
+    
     /**
      * The type of this tile.
      */
+    private Point fPosition;
     private final TileContent fContent;
 
     /**
@@ -51,22 +70,10 @@ public class Tile implements IPoint {
         return fContent;
     }
 
-    public double getCout() {
-        return cout;
-    }
-    
     public void setCout(double cout){
         this.cout = cout;
     }
 
-    public double getHeuristique() {
-        return heuristique;
-    }
-
-    public void setHeuristique(double heuristique) {
-        this.heuristique = heuristique;
-    }
-    
     public void setParent(Tile parent){
         this.parent = parent;
     }
@@ -134,10 +141,6 @@ public class Tile implements IPoint {
         return (fContent == TileContent.PLAYER);
     }
     
-    public double getDistance(Tile destination){
-        return Math.sqrt((Math.pow((destination.getY() - this.getY()), 2)) + (Math.pow((destination.getX() - this.getX()), 2)));
-    }
-
     @Override
     public int getX() {
         return fPosition.getX();
