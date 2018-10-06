@@ -46,20 +46,20 @@ public class Bot extends BaseBot {
 //            else
 //                maisonAVoler=false;
 //        }
-        if (compteur % 3 == 0) {
-           return createMoveAction(Point.UP);
-        } else if (compteur % 3 == 1) {
-            return createStealAction(Point.UP);
-        } else if (compteur % 3 == 2) {
-            return createMeleeAttackAction(Point.UP);
-        }
-
-        
-       compteur++;
-           
+//        if (compteur % 3 == 0) {
+//           return createMoveAction(Point.UP);
+//        } else if (compteur % 3 == 1) {
+//            return createStealAction(Point.UP);
+//        } else if (compteur % 3 == 2) {
+//            return createMeleeAttackAction(Point.UP);
+//        }
+//
+//        
+//       compteur++;
+//           
        
         
-         return createCollectAction(Point.UP);
+         return createMoveAction(Point.DOWN);
 
     }
 }
