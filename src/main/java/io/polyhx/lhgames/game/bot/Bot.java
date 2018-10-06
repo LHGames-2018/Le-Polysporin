@@ -12,23 +12,23 @@ import io.polyhx.lhgames.game.tile.TileContent;
 import java.util.List;
 
 public class Bot extends BaseBot {
-    
+
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
         map.print();
         IAction aReturn = null;
         System.out.println(player.getCarriedResource() + " " + player.getCapacityLevel());
-        if (player.getCarriedResource() == player.getResourceCapacity()){
+        if (player.getCarriedResource() == player.getResourceCapacity()) {
             aReturn = bouger(map, player, map.getTile(player.getHousePosition().getX(), player.getHousePosition().getY()));
         } else {
             ResourceTile resource = map.getResources().get(0);
-            for (int i = 1 ; i < map.getResources().size(); i++){
-                if ((map.getResources().get(i).getX() + map.getResources().get(i).getY()) < (resource.getX() + resource.getY())){
+            for (int i = 1; i < map.getResources().size(); i++) {
+                if ((map.getResources().get(i).getX() + map.getResources().get(i).getY()) < (resource.getX() + resource.getY())) {
                     resource = map.getResources().get(i);
                 }
             }
             aReturn = bouger(map, player, map.getTile(resource.getX(), resource.getY()));
         }
-        
+
         return aReturn;
 
     }
@@ -83,9 +83,6 @@ public class Bot extends BaseBot {
             case PLAYER:
                 aReturn = createMeleeAttackAction(direction);
                 break;
-                
-            
-                       
         }
 
         return aReturn;
