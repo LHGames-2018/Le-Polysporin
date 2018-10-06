@@ -29,7 +29,7 @@ public class Bot extends BaseBot {
         
         
         
-        return createMoveAction(Point.LEFT);
+        return createMoveAction(Point.UP);
         
     }
 }
